@@ -56,9 +56,9 @@ const CustomBarChart = ({ data }) => {
             activeDot={{ r: 8, fill: "yellow" }}
             activeStyle={{ fill: "green" }}
           >
-            {data.map((entry, index) => {
-              <Cell key={index} fill={getBarColor(index)} />;
-            })}
+            {data.map((entry, index) => (
+              <Cell key={index} fill={getBarColor(index)} />
+            ))}
           </Bar>
         </BarChart>
       </ResponsiveContainer>
