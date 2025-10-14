@@ -23,5 +23,6 @@ export const API_PATHS = {
   },
   IMAGE: {
     UPLOAD_IMAGE: "/api/v1/auth/upload-image",
+    UPLOAD_IMAGE_SIGNUP: "/api/v1/auth/upload-image?isSignup=true", // For signup
   },
 };

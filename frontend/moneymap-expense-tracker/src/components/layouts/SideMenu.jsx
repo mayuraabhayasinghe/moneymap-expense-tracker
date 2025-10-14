@@ -10,7 +10,7 @@ const SideMenu = ({ activeMenu }) => {
   const navigate = useNavigate();
 
   const handleClick = (route) => {
-    if (route === "logout") {
+    if (route === "/logout") {
       handleLogout();
       return;
     }
@@ -18,9 +18,19 @@ const SideMenu = ({ activeMenu }) => {
   };
 
   const handleLogout = () => {
+    // Clear all localStorage items
     localStorage.clear();
+
+    // Specifically remove the token to ensure user is logged out
+    localStorage.removeItem("token");
+
+    // Clear user data from context
     clearUser();
+
+    // Navigate to login page
     navigate("/login");
+
+    console.log("User logged out successfully");
   };
   return (
     <div className="w-64 h-[calc(100vh-61px)] bg-white border-r border-gray-200/50 p-5 sticky top-[61px] x-20">
