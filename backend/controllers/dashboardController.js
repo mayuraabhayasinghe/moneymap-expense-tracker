@@ -53,12 +53,18 @@ exports.getDashboardData = async (req, res) => {
 
     //Fetch last 5 transactions (income + expenses)
     const lastTransactions = [
-      ...Expense(
-        (await Income.find({ userId })).toSorted({ date: -1 }).limit(5)
-      ).map((txn) => ({
-        ...txn.toObject(),
-        type: "expense",
-      })),
+      ...(await Income.find({ userId }).sort({ date: -1 }).limit(5)).map(
+        (txn) => ({
+          ...txn.toObject(),
+          type: "income",
+        })
+      ),
+      ...(await Expense.find({ userId }).sort({ date: -1 }).limit(5)).map(
+        (txn) => ({
+          ...txn.toObject(),
+          type: "expense",
+        })
+      ),
     ].sort((a, b) => b.date - a.date); //Sort latest first
 
     //Final response
@@ -69,7 +75,7 @@ exports.getDashboardData = async (req, res) => {
       totalExpense: totalExpense[0]?.total || 0,
       last30DaysExpense: {
         total: expenseLast30Days,
-        transaction: last30DaysExpenseTransactions,
+        transactions: last30DaysExpenseTransactions,
       },
       last60DaysIncome: {
         total: incomeLast60Days,
