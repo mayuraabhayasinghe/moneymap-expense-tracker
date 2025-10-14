@@ -7,7 +7,7 @@ import ProfilePhotoSelector from "../../components/layouts/Inputs/ProfilePhotoSe
 import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
 import { UserContext } from "../../context/userContext";
-import uploadImage from "../../utils/uploadImage";
+import uploadImageForSignup from "../../utils/uploadImageForSignup";
 
 const SignUp = () => {
   const [profilePic, setProfilePic] = useState(null);
@@ -40,9 +40,9 @@ const SignUp = () => {
 
     //SignUp API call
     try {
-      //Upload image if it exist
+      //Upload image if it exists - using signup-specific function
       if (profilePic) {
-        const imgUploadRes = await uploadImage(profilePic);
+        const imgUploadRes = await uploadImageForSignup(profilePic);
         profileImageUrl = imgUploadRes.imageUrl || "";
       }
 
