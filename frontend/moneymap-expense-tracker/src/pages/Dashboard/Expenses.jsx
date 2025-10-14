@@ -4,6 +4,11 @@ import DashboardLayout from "../../components/layouts/DashboardLayout";
 import { API_PATHS } from "../../utils/apiPaths";
 import toast from "react-hot-toast";
 import axiosInstance from "../../utils/axiosInstance";
+import ExpenseOverview from "../../components/Expense/ExpenseOverview";
+import AddExpenseForm from "../../components/Expense/AddExpenseForm";
+import Modal from "../../components/Modal";
+import ExpenseList from "../../components/Expense/ExpenseList";
+import DeleteAlert from "../../components/DeleteAlert";
 
 const Expenses = () => {
   useUserAuth();
@@ -37,10 +42,10 @@ const Expenses = () => {
 
   //Handle Add Expense
   const handleAddExpense = async (income) => {
-    const { source, amount, date, icon } = income;
+    const { category, amount, date, icon } = income;
 
     //Validate Checks
-    if (!source.trim()) {
+    if (!category.trim()) {
       toast.error("Please enter expense source");
       return;
     }
@@ -51,18 +56,18 @@ const Expenses = () => {
     }
 
     if (!date) {
-      toast.error("Please select expense date");
+      toast.error("Date is required");
       return;
     }
 
     try {
       await axiosInstance.post(`${API_PATHS.EXPENSE.ADD_EXPENSE}`, {
-        source,
+        category,
         amount,
         date,
         icon,
       });
-      setOpenAddIncomeModal(false);
+      setOpenAddExpenseModal(false);
       toast.success("Expense added successfully");
       fetchExpenseDetails();
     } catch (error) {
@@ -73,13 +78,87 @@ const Expenses = () => {
     }
   };
 
+  //Delete Income
+  const deleteExpense = async (id) => {
+    try {
+      await axiosInstance.delete(API_PATHS.EXPENSE.DELETE_EXPENSE(id));
+      setOpenDeleteAlert({ show: false, data: null });
+      toast.success("Expense record deleted successfully");
+      fetchExpenseDetails();
+    } catch (error) {
+      console.error(
+        "Error deleting expense: ",
+        error.response?.data?.message || error.message
+      );
+    }
+  };
+
+  //Handle download expense details
+  const handleDownloadExpenseDetails = async () => {
+    try {
+      const response = await axiosInstance.get(
+        `${API_PATHS.EXPENSE.DOWNLOAD_EXPENSE}`,
+        {
+          responseType: "blob", // Important
+        }
+      );
+      // Create a URL for the file
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "expense_details.xlsx");
+      document.body.appendChild(link);
+      link.click();
+      link.parentNode.removeChild(link);
+      Window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Error downloading expense details: ", error);
+      toast.error("Failed to download expense details. Please try again.");
+    }
+  };
+
   useEffect(() => {
     fetchExpenseDetails();
     return () => {};
   }, []);
   return (
     <DashboardLayout activeMenu="Expense">
-      <div className="my-5 mx-auto"></div>
+      <div className="my-5 mx-auto">
+        <div className="grid grid-cols-1 gap-6">
+          <div className="">
+            <ExpenseOverview
+              transactions={expenseData}
+              onExpenseIncome={() => setOpenAddExpenseModal(true)}
+            />
+          </div>
+          <ExpenseList
+            transactions={expenseData}
+            onDelete={(id) => {
+              setOpenDeleteAlert({ show: true, data: id });
+            }}
+            onDownload={handleDownloadExpenseDetails}
+          />
+        </div>
+
+        <Modal
+          isOpen={openAddExpenseModal}
+          onClose={() => setOpenAddExpenseModal(false)}
+          title="Add Expense"
+        >
+          <AddExpenseForm onAddExpense={handleAddExpense} />
+        </Modal>
+
+        <Modal
+          isOpen={openDeleteAlert.show}
+          onClose={() => setOpenDeleteAlert({ show: false, data: null })}
+          title="Delete Expense"
+        >
+          <DeleteAlert
+            content="Are you sure you want to delete this expense record?"
+            onDelete={() => deleteExpense(openDeleteAlert.data)}
+          />
+        </Modal>
+      </div>
     </DashboardLayout>
   );
 };
