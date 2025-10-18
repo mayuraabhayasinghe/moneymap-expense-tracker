@@ -44,7 +44,8 @@ Backend Setup
      ```bash
      npm install
      ```
-  3. Create a `.env` file with the following variables:
+  3. Create `.env` files with the following variables:
+     - Backend
      ```env
      PORT=your_port
      MONGO_URI=your_mongodb_connection_string
@@ -53,8 +54,12 @@ Backend Setup
      CLOUDINARY_API_KEY=your_cloudinary_api_key
      CLOUDINARY_API_SECRET=your_cloudinary_api_secret
      ```
+     - Frontend
+     ```env
+     VITE_BASE_URL=your_backend_url
+     ```
 
-  4. Start the development server:
+  5. Start the development server:
      ```bash
      npm run dev
      ```
