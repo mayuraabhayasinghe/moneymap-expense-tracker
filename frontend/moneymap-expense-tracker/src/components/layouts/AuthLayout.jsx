@@ -22,9 +22,9 @@ const AuthLayout = ({ children }) => {
 
         {/* --- Decorative elements (non-blurred, separate layer) --- */}
         <div className="absolute inset-0">
-          <div className="w-48 h-48 rounded-[40px] bg-orange-500 absolute -top-7 left-5 opacity-80"></div>
-          <div className="w-48 h-56 rounded-[40px] bg-purple-300 absolute top-[30%] -right-20"></div>
-          <div className="w-48 h-48 rounded-[40px] bg-yellow-400 absolute -bottom-7 left-50 opacity-80"></div>
+          <div className="w-48 h-48 rounded-[40px] bg-orange-500 animate-pulse absolute top-17 left-5 opacity-80"></div>
+          <div className="w-48 h-56 rounded-[40px] bg-purple-400 animate-pulse absolute top-[30%] -right-20"></div>
+          <div className="w-48 h-48 rounded-[40px] bg-yellow-400 animate-pulse absolute bottom-15 left-50 opacity-80"></div>
         </div>
 
         {/* --- Blur Overlay (applies blur to the *background layers* behind it) --- */}

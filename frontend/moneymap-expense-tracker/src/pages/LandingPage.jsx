@@ -62,18 +62,57 @@ const LandingPage = () => {
 
       {/* Hero Section */}
       <div className="relative overflow-hidden">
+        <section className="relative flex items-center justify-center min-h-screen overflow-hidden text-center px-6 sm:px-10">
+          {/* === Blurred Gradient Background === */}
+          <div className="absolute inset-0 bg-gradient-to-br from-orange-200 via-pink-100 to-yellow-100 opacity-70 blur-[100px]" />
+
+          {/* === Decorative Blobs === */}
+          <div className="absolute w-70 h-70 bg-red-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 top-30 left-10 animate-spin" />
+          <div className="absolute w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 top-1/3 right-10 animate-spin" />
+          <div className="absolute w-64 h-64 bg-yellow-500 rounded-full mix-blend-multiply filter blur-3xl opacity-30 bottom-10 left-1/3 animate-pulse" />
+
+          {/* === Content === */}
+          <div className="relative z-10 max-w-3xl mx-auto">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-gray-900 leading-tight">
+              Take control of your{" "}
+              <span className="text-orange-600 block">Financial Journey</span>
+            </h1>
+
+            <p className="mt-6 text-base sm:text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
+              MoneyMap helps you track expenses, visualize spending patterns,
+              and achieve your financial goals with powerful analytics and
+              intuitive tools.
+            </p>
+
+            <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+              <Link
+                to="/signup"
+                className="px-8 py-3 rounded-md text-base font-medium text-white bg-orange-500 hover:bg-orange-600 transition-colors shadow-lg w-full sm:w-auto"
+              >
+                Get Started
+              </Link>
+
+              <a
+                href="#features"
+                className="px-8 py-3 rounded-md text-base font-medium text-orange-500 border border-orange-500 bg-white hover:bg-orange-50 transition-colors w-full sm:w-auto"
+              >
+                Learn More
+              </a>
+            </div>
+          </div>
+        </section>
         {/* Blurred Background Layer */}
-        <div className="absolute inset-0 bg-gradient-to-br from-orange-200 via-pink-100 to-yellow-100 opacity-70 blur-[100px]" />
+        {/* <div className="absolute inset-0 bg-gradient-to-br from-orange-200 via-pink-100 to-yellow-100 opacity-70 blur-[100px]" /> */}
 
         {/* Content Layer */}
-        <div className="relative max-w-7xl mx-auto">
+        {/* <div className="relative max-w-7xl mx-auto">
           <div className="z-10 pb-8 sm:pb-16 md:pb-20 lg:max-w-5xl lg:w-full lg:pb-28 xl:pb-32">
             <main className="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
               <div className="text-center">
                 <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-7xl md:text-6xl">
                   <span className="block">Take control of your</span>
                   <span className="block text-orange-600">
-                    financial journey
+                    Financial Journey
                   </span>
                 </h1>
                 <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
@@ -103,7 +142,7 @@ const LandingPage = () => {
               </div>
             </main>
           </div>
-        </div>
+        </div> */}
       </div>
 
       {/* Features Section */}
