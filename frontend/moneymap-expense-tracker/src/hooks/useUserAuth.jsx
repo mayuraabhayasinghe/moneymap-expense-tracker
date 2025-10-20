@@ -9,7 +9,15 @@ export const useUserAuth = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    // Skip user fetch if we already have user data
     if (user) return;
+
+    // Skip user fetch if there's no token (not authenticated)
+    const token = localStorage.getItem("token");
+    if (!token) {
+      console.log("No token found, skipping user fetch");
+      return;
+    }
 
     let isMounted = true;
 
@@ -23,6 +31,7 @@ export const useUserAuth = () => {
         console.error("Failed to fetch user info: ", error);
         if (isMounted) {
           clearUser();
+          // Only navigate to login if there was a token but it was invalid
           navigate("/login");
         }
       }
@@ -31,7 +40,7 @@ export const useUserAuth = () => {
     fetchUserInfo();
 
     return () => {
-        isMounted = false;
+      isMounted = false;
     };
   }, [updateUser, clearUser, navigate]);
 };

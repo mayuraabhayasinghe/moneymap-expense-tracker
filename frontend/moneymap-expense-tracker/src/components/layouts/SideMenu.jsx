@@ -28,7 +28,7 @@ const SideMenu = ({ activeMenu }) => {
     clearUser();
 
     // Navigate to login page
-    navigate("/login");
+    navigate("/");
 
     console.log("User logged out successfully");
   };
