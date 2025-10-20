@@ -10,6 +10,7 @@ import SignUp from "./pages/Auth/SignUp";
 import Home from "./pages/Dashboard/Home";
 import Income from "./pages/Dashboard/Income";
 import Expenses from "./pages/Dashboard/Expenses";
+import LandingPage from "./pages/LandingPage";
 import UserProvider from "./context/userContext";
 import { Toaster } from "react-hot-toast";
 
@@ -20,6 +21,7 @@ const App = () => {
         <Router>
           <Routes>
             <Route path="/" element={<Root />} />
+            <Route path="/landing" element={<LandingPage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signUp" element={<SignUp />} />
             <Route path="/dashboard" element={<Home />} />
@@ -43,13 +45,14 @@ const App = () => {
 export default App;
 
 const Root = () => {
-  //Check the existance of local storage
+  //Check the existence of local storage
   const isAuthenticated = !!localStorage.getItem("token");
 
-  //Redirect to dashboard if authenticated otherwise to login
-  return isAuthenticated ? (
-    <Navigate to="/dashboard" />
-  ) : (
-    <Navigate to="/login" />
-  );
+  console.log("Root component rendered. Auth status:", isAuthenticated);
+
+  // First approach: Always show landing page directly
+  return <LandingPage />;
+
+  // Original approach (commented out):
+  // return isAuthenticated ? <Navigate to="/dashboard" /> : <LandingPage />;
 };
